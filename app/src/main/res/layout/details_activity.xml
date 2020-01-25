@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:background="@color/black">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/movie_title"
+            style="@style/TitleH6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="The Movie" />
+
+        <ImageView
+            android:id="@+id/movie_poster"
+            android:layout_width="0dp"
+            android:layout_height="300dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginRight="8dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_image_placeholder"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/movie_title" />
+
+        <TextView
+            android:id="@+id/movie_release_date_label"
+            style="@style/Subtitle1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="24dp"
+            android:text="@string/release_date_label"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/movie_poster" />
+
+        <TextView
+            android:id="@+id/movie_release_date"
+            style="@style/Body2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="16dp"
+            android:paddingTop="2dp"
+            app:layout_constraintLeft_toRightOf="@id/movie_release_date_label"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@id/movie_release_date_label"
+            tools:text="01/01/2021" />
+
+        <TextView
+            android:id="@+id/movie_genres_label"
+            style="@style/Subtitle1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="@string/genres_label"
+            app:layout_constraintLeft_toLeftOf="@id/movie_release_date_label"
+            app:layout_constraintTop_toBottomOf="@id/movie_release_date" />
+
+        <TextView
+            android:id="@+id/movie_genres"
+            style="@style/Body2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="16dp"
+            android:paddingTop="2dp"
+            app:layout_constraintLeft_toRightOf="@id/movie_genres_label"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@id/movie_genres_label"
+            tools:text="Romance, Comedy, Action, Adventure, Sci-Fi, Horror, All of it" />
+
+        <TextView
+            android:id="@+id/movie_overview_label"
+            style="@style/Subtitle1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="@string/overview_label"
+            app:layout_constraintLeft_toLeftOf="@id/movie_genres_label"
+            app:layout_constraintTop_toBottomOf="@id/movie_genres" />
+
+        <TextView
+            android:id="@+id/movie_overview"
+            style="@style/Body2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="16dp"
+            android:paddingTop="2dp"
+            app:layout_constraintLeft_toRightOf="@id/movie_overview_label"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@id/movie_overview_label"
+            tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ultricies nibh sed lacus blandit, vitae facilisis massa malesuada. Ut sit amet congue dui. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Quisque elementum porttitor ipsum eget fermentum. Sed in lectus tortor. Cras mi erat, scelerisque in mi quis, iaculis sodales sem. Ut venenatis lacus eu varius malesuada. Nulla lorem orci, pharetra eu nibh a, porta fringilla mauris. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Sed congue, quam vel porttitor finibus, ante ipsum consequat libero, a fringilla tortor augue ut velit. Vestibulum non tortor nec metus dapibus gravida. Nulla facilisi. In pretium ipsum et dui malesuada volutpat." />
+
+        <ImageView
+            android:id="@+id/movie_backdrop"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:visibility="gone"
+            android:layout_marginTop="24dp"
+            android:layout_marginRight="8dp"
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_image_placeholder"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/movie_overview" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.core.widget.NestedScrollView>

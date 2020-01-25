@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="release_date_label">Data de Lançamento:</string>
+    <string name="genres_label">Gênero:</string>
+    <string name="overview_label">Resumo:</string>
+    <string name="no_title_found">Nenhum título encontrado</string>
+    <string name="no_release_date_found">Nenhuma data de lançamento encontrada</string>
+    <string name="no_genres_found">Nenhum gênero encontrado</string>
+    <string name="no_overview_found">Nenhuma resumo encontrado</string>
+</resources>

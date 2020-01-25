@@ -1,8 +1,9 @@
-package com.arctouch.codechallenge
+package com.arctouch.codechallenge.presenter
 
 import android.annotation.SuppressLint
-import com.arctouch.codechallenge.api.TmdbApi
-import com.arctouch.codechallenge.data.Cache
+import com.arctouch.codechallenge.model.api.TmdbApi
+import com.arctouch.codechallenge.model.data.Cache
+import com.arctouch.codechallenge.view.HomeView
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import okhttp3.OkHttpClient
