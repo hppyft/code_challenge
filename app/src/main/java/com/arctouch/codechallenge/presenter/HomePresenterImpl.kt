@@ -1,51 +1,44 @@
 package com.arctouch.codechallenge.presenter
 
-import android.annotation.SuppressLint
+import androidx.lifecycle.LiveData
+import androidx.paging.LivePagedListBuilder
+import androidx.paging.PagedList
+import com.arctouch.codechallenge.model.Movie
+import com.arctouch.codechallenge.model.MoviesDataSourceFactory
 import com.arctouch.codechallenge.model.api.TmdbApi
-import com.arctouch.codechallenge.model.data.Cache
 import com.arctouch.codechallenge.view.HomeView
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
+import io.reactivex.disposables.CompositeDisposable
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.moshi.MoshiConverterFactory
 
 class HomePresenterImpl(val view: HomeView) : HomePresenter {
-    private lateinit var api: TmdbApi
+    private var api: TmdbApi = Retrofit.Builder()
+            .baseUrl(TmdbApi.URL)
+            .client(OkHttpClient.Builder().build())
+            .addConverterFactory(MoshiConverterFactory.create())
+            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+            .build()
+            .create(TmdbApi::class.java)
+    private val movieList: LiveData<PagedList<Movie>>
+    private val compositeDisposable = CompositeDisposable()
+    private var sourceFactory: MoviesDataSourceFactory
 
-    override fun onCreate() {
-        api = Retrofit.Builder()
-                .baseUrl(TmdbApi.URL)
-                .client(OkHttpClient.Builder().build())
-                .addConverterFactory(MoshiConverterFactory.create())
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+    init {
+        sourceFactory = MoviesDataSourceFactory(compositeDisposable, api)
+        val config = PagedList.Config.Builder()
+                .setPageSize(20)
+                .setEnablePlaceholders(false)
                 .build()
-                .create(TmdbApi::class.java)
-        findGenres()
+        movieList = LivePagedListBuilder<Long, Movie>(sourceFactory, config).build()
     }
 
-    @SuppressLint("CheckResult")
-    fun startGettingMovies() {
-        api.upcomingMovies(TmdbApi.API_KEY, TmdbApi.DEFAULT_LANGUAGE, 1, TmdbApi.DEFAULT_REGION)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe {
-                    val moviesWithGenres = it.results.map { movie ->
-                        movie.copy(genres = Cache.genres.filter { movie.genreIds?.contains(it.id) == true })
-                    }
-                    view.showMovies(moviesWithGenres)
-                }
+    override fun onDestroy() {
+        compositeDisposable.dispose()
     }
 
-    @SuppressLint("CheckResult")
-    fun findGenres() {
-        api.genres(TmdbApi.API_KEY, TmdbApi.DEFAULT_LANGUAGE)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe {
-                    Cache.cacheGenres(it.genres)
-                    startGettingMovies()
-                }
+    override fun getList(): LiveData<PagedList<Movie>> {
+        return movieList
     }
 }
