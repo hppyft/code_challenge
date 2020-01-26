@@ -10,4 +10,6 @@
     <string name="details_screen_label">Tela de Detalhes</string>
     <string name="search_screen_label">Tela de Busca</string>
     <string name="search_title">Buscar</string>
+    <string name="no_movies_found">Nenhum filme encontrado</string>
+    <string name="search_hint">Procure por filmes aqui</string>
 </resources>

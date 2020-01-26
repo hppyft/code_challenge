@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
@@ -49,8 +50,12 @@ class HomeActivity : AppCompatActivity(), HomeView, MovieClickedListener {
         presenter.onDestroy()
     }
 
-    override fun setList(list: LiveData<PagedList<Movie>>){
+    override fun setList(list: LiveData<PagedList<Movie>>) {
         list.observe(this, Observer<PagedList<Movie>> {
+            if (it.isNotEmpty()) {
+                no_movies_tv.visibility = View.GONE
+                recyclerView.visibility = View.VISIBLE
+            }
             adapter.submitList(it)
         })
     }

@@ -11,4 +11,7 @@
     <string name="details_screen_label">Details Screen</string>
     <string name="search_screen_label">Search Screen</string>
     <string name="search_title">Search</string>
+    <string name="no_movies_found">No movies found</string>
+    <string name="search_hint">Search for movies here</string>
+
 </resources>

@@ -3,6 +3,7 @@ package com.arctouch.codechallenge.view
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
@@ -12,10 +13,9 @@ import com.arctouch.codechallenge.model.data.Movie
 import com.arctouch.codechallenge.presenter.SearchPresenter
 import com.arctouch.codechallenge.presenter.SearchPresenterImpl
 import com.arctouch.codechallenge.view.adapter.MoviesPagedAdapter
-import kotlinx.android.synthetic.main.home_activity.recyclerView
 import kotlinx.android.synthetic.main.search_activity.*
 
-class SearchViewImpl : AppCompatActivity(), SearchView{
+class SearchViewImpl : AppCompatActivity(), SearchView {
     private val presenter: SearchPresenter
     private lateinit var adapter: MoviesPagedAdapter
 
@@ -48,11 +48,18 @@ class SearchViewImpl : AppCompatActivity(), SearchView{
 
     private fun initAdapter() {
         adapter = MoviesPagedAdapter()
-        recyclerView.adapter = adapter
+        recycler_view.adapter = adapter
     }
 
-    override fun setList(list: LiveData<PagedList<Movie>>){
+    override fun setList(list: LiveData<PagedList<Movie>>) {
         list.observe(this, Observer<PagedList<Movie>> {
+            if (it.isNotEmpty()) {
+                no_movies_tv.visibility = View.GONE
+                recycler_view.visibility = View.VISIBLE
+            } else {
+                no_movies_tv.visibility = View.VISIBLE
+                recycler_view.visibility = View.GONE
+            }
             adapter.submitList(it)
         })
     }
