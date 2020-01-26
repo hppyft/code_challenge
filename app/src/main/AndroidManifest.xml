@@ -29,7 +29,6 @@
             android:name=".view.DetailsViewImpl"
             android:configChanges="orientation|screenSize"
             android:label="@string/details_screen_label"
-            android:parentActivityName=".view.HomeActivity"
             android:theme="@style/Theme.AppCompat" />
         <activity
             android:name=".view.SearchViewImpl"

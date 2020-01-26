@@ -1,5 +1,6 @@
 package com.arctouch.codechallenge.view
 
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -15,7 +16,7 @@ import com.arctouch.codechallenge.presenter.SearchPresenterImpl
 import com.arctouch.codechallenge.view.adapter.MoviesPagedAdapter
 import kotlinx.android.synthetic.main.search_activity.*
 
-class SearchViewImpl : AppCompatActivity(), SearchView {
+class SearchViewImpl : AppCompatActivity(), SearchView, MovieClickedListener {
     private val presenter: SearchPresenter
     private lateinit var adapter: MoviesPagedAdapter
 
@@ -47,7 +48,7 @@ class SearchViewImpl : AppCompatActivity(), SearchView {
     }
 
     private fun initAdapter() {
-        adapter = MoviesPagedAdapter()
+        adapter = MoviesPagedAdapter(this)
         recycler_view.adapter = adapter
     }
 
@@ -67,5 +68,12 @@ class SearchViewImpl : AppCompatActivity(), SearchView {
     override fun onDestroy() {
         super.onDestroy()
         presenter.onDestroy()
+    }
+
+    override fun onMovieClicked(movieId: Long) {
+        val intent = Intent(this, DetailsViewImpl::class.java).apply {
+            putExtra(DetailsView.MOVIE_ID, movieId)
+        }
+        startActivity(intent)
     }
 }

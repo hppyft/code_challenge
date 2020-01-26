@@ -2,6 +2,7 @@ package com.arctouch.codechallenge.view
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.arctouch.codechallenge.R
@@ -26,6 +27,15 @@ class DetailsViewImpl : AppCompatActivity(), DetailsView {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         val movieId = intent.getLongExtra(DetailsView.MOVIE_ID, -1)
         presenter.onCreate(movieId)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> {
+                super.onBackPressed()
+            }
+        }
+        return true
     }
 
     @SuppressLint("CheckResult")

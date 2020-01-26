@@ -14,7 +14,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import kotlinx.android.synthetic.main.movie_item.view.*
 
-class MoviesPagedAdapter(private val clickedListener: MovieClickedListener? = null) : PagedListAdapter<Movie, MoviesPagedAdapter.MovieViewHolder>(DIFF_CALLBACK) {
+class MoviesPagedAdapter(private val clickedListener: MovieClickedListener) : PagedListAdapter<Movie, MoviesPagedAdapter.MovieViewHolder>(DIFF_CALLBACK) {
     inner class MovieViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         private val movieImageUrlBuilder = MovieImageUrlBuilder()
@@ -30,7 +30,7 @@ class MoviesPagedAdapter(private val clickedListener: MovieClickedListener? = nu
                     .into(itemView.posterImageView)
 
             itemView.card.setOnClickListener {
-                clickedListener?.onMovieClicked(movie.id.toLong())
+                clickedListener.onMovieClicked(movie.id.toLong())
             }
         }
     }
