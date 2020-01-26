@@ -13,35 +13,35 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 
-abstract class MovieListBasePresenter(val dataSourceType: Int, val view: MovieListBaseView) {
+abstract class MovieListBasePresenter(private val dataSourceType: Int, val view: MovieListBaseView) {
     private val compositeDisposable = CompositeDisposable()
-    protected lateinit var sourceFactory: MoviesDataSourceFactory
+    protected var sourceFactory: MoviesDataSourceFactory? = null
 
     init {
         tryToGetMovies()
     }
 
-    fun tryToGetMovies() {
+    fun tryToGetMovies(query: String = "") {
         if (NetworkUtil.isDeviceConnected()) {
-            getMovies()
+            getMovies(query)
         } else {
             view.showNoConnection()
         }
     }
 
     @SuppressLint("CheckResult")
-    protected fun getMovies() {
+    private fun getMovies(query: String) {
         MoviesApplication.getInstance().getApi().genres()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe {
                     Cache.cacheGenres(it.genres)
-                    sourceFactory = MoviesDataSourceFactory(compositeDisposable, MoviesApplication.getInstance().getApi(), dataSourceType)
+                    sourceFactory = MoviesDataSourceFactory(compositeDisposable, MoviesApplication.getInstance().getApi(), dataSourceType, query)
                     val config = PagedList.Config.Builder()
                             .setPageSize(20)
                             .setEnablePlaceholders(false)
                             .build()
-                    view.setList(LivePagedListBuilder<Long, Movie>(sourceFactory, config).build())
+                    view.setList(LivePagedListBuilder<Long, Movie>(sourceFactory!!, config).build())
                 }
     }
 

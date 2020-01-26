@@ -17,18 +17,15 @@ import com.arctouch.codechallenge.view.adapter.MoviesPagedAdapter
 import kotlinx.android.synthetic.main.search_activity.*
 
 class SearchViewImpl : AppCompatActivity(), SearchView, MovieClickedListener {
-    private val presenter: SearchPresenter
+    private lateinit var presenter: SearchPresenter
     private lateinit var adapter: MoviesPagedAdapter
-
-    init {
-        presenter = SearchPresenterImpl(this)
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.search_activity)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         initAdapter()
+        presenter = SearchPresenterImpl(this)
         setupSearchBar()
     }
 
