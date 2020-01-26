@@ -2,5 +2,6 @@ package com.arctouch.codechallenge.presenter
 
 interface HomePresenter {
     fun onDestroy()
-    fun tryAgain()
+    fun onQueryChanged(query: String)
+    fun tryAgain(query: String)
 }

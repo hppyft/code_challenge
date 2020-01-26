@@ -2,8 +2,8 @@ package com.arctouch.codechallenge.view
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuItem
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.LiveData
@@ -25,19 +25,28 @@ class HomeActivity : AppCompatActivity(), HomeView, MovieClickedListener {
         setContentView(R.layout.home_activity)
         initAdapter()
         presenter = HomePresenterImpl(this)
+        setupSearchBar()
+        img_bt.setOnClickListener {
+            search_view.setText("")
+        }
         try_again_bt.setOnClickListener {
-            presenter.tryAgain()
+            presenter.tryAgain(search_view.text.toString())
         }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.menu_home, menu)
-        return true
-    }
+    private fun setupSearchBar() {
+        search_view.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+                presenter.onQueryChanged(s.toString())
+            }
 
-    fun onSearchClicked(menuItem: MenuItem) {
-        val intent = Intent(this, SearchViewImpl::class.java)
-        startActivity(intent)
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            }
+
+        })
     }
 
     private fun initAdapter() {
@@ -52,9 +61,13 @@ class HomeActivity : AppCompatActivity(), HomeView, MovieClickedListener {
 
     override fun setList(list: LiveData<PagedList<Movie>>) {
         list.observe(this, Observer<PagedList<Movie>> {
-            home_progress_bar.visibility = View.GONE
-            no_movies_group.visibility = View.GONE
-            home_movies_list.visibility = View.VISIBLE
+            if (it.isEmpty()) {
+                showNoMovies()
+            } else {
+                home_progress_bar.visibility = View.GONE
+                no_movies_group.visibility = View.GONE
+                home_movies_list.visibility = View.VISIBLE
+            }
             adapter.submitList(it)
         })
     }
@@ -67,8 +80,9 @@ class HomeActivity : AppCompatActivity(), HomeView, MovieClickedListener {
         startActivity(intent)
     }
 
-    override fun showNoConnection() {
+    override fun showNoMovies() {
         home_progress_bar.visibility = View.GONE
+        home_movies_list.visibility = View.GONE
         no_movies_group.visibility = View.VISIBLE
     }
 }
