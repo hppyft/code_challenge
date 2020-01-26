@@ -28,6 +28,9 @@ class HomeActivity : AppCompatActivity(), HomeView, MovieClickedListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.home_activity)
         initAdapter()
+        try_again_bt.setOnClickListener {
+            presenter.tryAgain()
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -53,7 +56,7 @@ class HomeActivity : AppCompatActivity(), HomeView, MovieClickedListener {
     override fun setList(list: LiveData<PagedList<Movie>>) {
         list.observe(this, Observer<PagedList<Movie>> {
             if (it.isNotEmpty()) {
-                no_movies_tv.visibility = View.GONE
+                no_movies_group.visibility = View.GONE
                 recyclerView.visibility = View.VISIBLE
             }
             adapter.submitList(it)

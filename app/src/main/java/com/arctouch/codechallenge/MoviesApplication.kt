@@ -1,7 +1,7 @@
 package com.arctouch.codechallenge
 
 import android.app.Application
-import com.arctouch.codechallenge.model.api.TmdbApi
+import com.arctouch.codechallenge.model.api.MoviesModel
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
@@ -9,7 +9,7 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 
 class MoviesApplication : Application() {
 
-    private var api: TmdbApi? = null
+    private var api: MoviesModel? = null
 
     companion object {
         private lateinit var INSTANCE: MoviesApplication
@@ -24,7 +24,7 @@ class MoviesApplication : Application() {
         INSTANCE = this
     }
 
-    fun getApi(): TmdbApi {
+    fun getApi(): MoviesModel {
         if (api == null) {
             startApi()
         }
@@ -33,11 +33,11 @@ class MoviesApplication : Application() {
 
     private fun startApi() {
         api = Retrofit.Builder()
-                .baseUrl(TmdbApi.URL)
+                .baseUrl(MoviesModel.URL)
                 .client(OkHttpClient.Builder().build())
                 .addConverterFactory(MoshiConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build()
-                .create(TmdbApi::class.java)
+                .create(MoviesModel::class.java)
     }
 }

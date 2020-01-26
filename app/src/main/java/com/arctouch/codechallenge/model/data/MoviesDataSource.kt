@@ -1,7 +1,6 @@
 package com.arctouch.codechallenge.model.data
 
 import androidx.paging.ItemKeyedDataSource
-import com.arctouch.codechallenge.model.api.TmdbApi
 import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
 

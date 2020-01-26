@@ -3,7 +3,7 @@ package com.arctouch.codechallenge.presenter
 import com.arctouch.codechallenge.model.data.MoviesDataSourceFactory
 import com.arctouch.codechallenge.view.SearchView
 
-class SearchPresenterImpl(val view: SearchView) : MovieListBasePresenter(MoviesDataSourceFactory.SEARCHED_MOVIES, view), SearchPresenter {
+class SearchPresenterImpl(view: SearchView) : MovieListBasePresenter(MoviesDataSourceFactory.SEARCHED_MOVIES, view), SearchPresenter {
 
     override fun onQueryChanged(query: String) {
         sourceFactory.query = query
