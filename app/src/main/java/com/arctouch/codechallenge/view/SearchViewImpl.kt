@@ -49,17 +49,17 @@ class SearchViewImpl : AppCompatActivity(), SearchView, MovieClickedListener {
 
     private fun initAdapter() {
         adapter = MoviesPagedAdapter(this)
-        recycler_view.adapter = adapter
+        search_movies_list.adapter = adapter
     }
 
     override fun setList(list: LiveData<PagedList<Movie>>) {
         list.observe(this, Observer<PagedList<Movie>> {
             if (it.isNotEmpty()) {
                 no_movies_tv.visibility = View.GONE
-                recycler_view.visibility = View.VISIBLE
+                search_movies_list.visibility = View.VISIBLE
             } else {
                 no_movies_tv.visibility = View.VISIBLE
-                recycler_view.visibility = View.GONE
+                search_movies_list.visibility = View.GONE
             }
             adapter.submitList(it)
         })

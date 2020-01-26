@@ -45,7 +45,7 @@ class HomeActivity : AppCompatActivity(), HomeView, MovieClickedListener {
 
     private fun initAdapter() {
         adapter = MoviesPagedAdapter(this)
-        recyclerView.adapter = adapter
+        home_movies_list.adapter = adapter
     }
 
     override fun onDestroy() {
@@ -55,9 +55,13 @@ class HomeActivity : AppCompatActivity(), HomeView, MovieClickedListener {
 
     override fun setList(list: LiveData<PagedList<Movie>>) {
         list.observe(this, Observer<PagedList<Movie>> {
-            if (it.isNotEmpty()) {
+            progress_bar.visibility = View.GONE
+            if (it.isEmpty()) {
+                no_movies_group.visibility = View.VISIBLE
+                home_movies_list.visibility = View.GONE
+            } else {
                 no_movies_group.visibility = View.GONE
-                recyclerView.visibility = View.VISIBLE
+                home_movies_list.visibility = View.VISIBLE
             }
             adapter.submitList(it)
         })
