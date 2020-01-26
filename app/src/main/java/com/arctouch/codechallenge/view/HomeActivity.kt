@@ -2,11 +2,13 @@ package com.arctouch.codechallenge.view
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.paging.PagedList
 import com.arctouch.codechallenge.R
-import com.arctouch.codechallenge.model.Movie
+import com.arctouch.codechallenge.model.data.Movie
 import com.arctouch.codechallenge.presenter.HomePresenter
 import com.arctouch.codechallenge.presenter.HomePresenterImpl
 import com.arctouch.codechallenge.view.adapter.MoviesPagedAdapter
@@ -24,6 +26,16 @@ class HomeActivity : AppCompatActivity(), HomeView, MovieClickedListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.home_activity)
         initAdapter()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_home, menu)
+        return true
+    }
+
+    fun onSearchClicked(menuItem: MenuItem) {
+        val intent = Intent(this, SearchViewImpl::class.java)
+        startActivity(intent)
     }
 
     private fun initAdapter() {

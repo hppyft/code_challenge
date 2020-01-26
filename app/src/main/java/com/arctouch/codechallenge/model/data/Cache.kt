@@ -1,7 +1,5 @@
 package com.arctouch.codechallenge.model.data
 
-import com.arctouch.codechallenge.model.Genre
-
 object Cache {
 
     var genres = listOf<Genre>()

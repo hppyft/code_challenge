@@ -1,4 +1,4 @@
-package com.arctouch.codechallenge.model
+package com.arctouch.codechallenge.model.data
 
 import com.squareup.moshi.Json
 
@@ -6,7 +6,7 @@ data class GenreResponse(val genres: List<Genre>)
 
 data class Genre(val id: Int, val name: String)
 
-data class UpcomingMoviesResponse(
+data class MoviesResponse(
         val page: Int,
         val results: List<Movie>,
         @Json(name = "total_pages") val totalPages: Int,

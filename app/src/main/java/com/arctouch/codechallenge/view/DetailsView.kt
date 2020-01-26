@@ -1,6 +1,6 @@
 package com.arctouch.codechallenge.view
 
-import com.arctouch.codechallenge.model.Movie
+import com.arctouch.codechallenge.model.data.Movie
 
 interface DetailsView {
     fun showMovie(movie: Movie)

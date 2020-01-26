@@ -7,14 +7,14 @@ import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.arctouch.codechallenge.R
-import com.arctouch.codechallenge.model.Movie
+import com.arctouch.codechallenge.model.data.Movie
 import com.arctouch.codechallenge.util.MovieImageUrlBuilder
 import com.arctouch.codechallenge.view.MovieClickedListener
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import kotlinx.android.synthetic.main.movie_item.view.*
 
-class MoviesPagedAdapter(private val clickedListener: MovieClickedListener) : PagedListAdapter<Movie, MoviesPagedAdapter.MovieViewHolder>(DIFF_CALLBACK) {
+class MoviesPagedAdapter(private val clickedListener: MovieClickedListener? = null) : PagedListAdapter<Movie, MoviesPagedAdapter.MovieViewHolder>(DIFF_CALLBACK) {
     inner class MovieViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         private val movieImageUrlBuilder = MovieImageUrlBuilder()
@@ -30,7 +30,7 @@ class MoviesPagedAdapter(private val clickedListener: MovieClickedListener) : Pa
                     .into(itemView.posterImageView)
 
             itemView.card.setOnClickListener {
-                clickedListener.onMovieClicked(movie.id.toLong())
+                clickedListener?.onMovieClicked(movie.id.toLong())
             }
         }
     }

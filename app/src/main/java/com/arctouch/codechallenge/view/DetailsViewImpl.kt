@@ -5,7 +5,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.arctouch.codechallenge.R
-import com.arctouch.codechallenge.model.Movie
+import com.arctouch.codechallenge.model.data.Movie
 import com.arctouch.codechallenge.presenter.DetailsPresenter
 import com.arctouch.codechallenge.presenter.DetailsPresenterImpl
 import com.arctouch.codechallenge.util.MovieImageUrlBuilder
@@ -23,6 +23,7 @@ class DetailsViewImpl : AppCompatActivity(), DetailsView {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.details_activity)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
         val movieId = intent.getLongExtra(DetailsView.MOVIE_ID, -1)
         presenter.onCreate(movieId)
     }

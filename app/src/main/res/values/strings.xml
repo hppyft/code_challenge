@@ -8,4 +8,7 @@
     <string name="no_release_date_found">No Release Date Found</string>
     <string name="no_genres_found">No Genres Found</string>
     <string name="no_overview_found">No Overview Found</string>
+    <string name="details_screen_label">Details Screen</string>
+    <string name="search_screen_label">Search Screen</string>
+    <string name="search_title">Search</string>
 </resources>

@@ -1,13 +1,9 @@
-package com.arctouch.codechallenge.model
+package com.arctouch.codechallenge.model.data
 
-import androidx.paging.ItemKeyedDataSource
 import com.arctouch.codechallenge.model.api.TmdbApi
-import com.arctouch.codechallenge.model.data.Cache
 import io.reactivex.disposables.CompositeDisposable
 
-class MoviesDataSource(private val api: TmdbApi, private val compositeDisposable: CompositeDisposable) : ItemKeyedDataSource<Long, Movie>() {
-
-    var page = 1L
+class UpcomingMoviesDataSource(api: TmdbApi, compositeDisposable: CompositeDisposable) : MoviesDataSource(api, compositeDisposable) {
 
     override fun loadInitial(params: LoadInitialParams<Long>, callback: LoadInitialCallback<Movie>) {
         compositeDisposable.add(api.upcomingMovies(TmdbApi.API_KEY, TmdbApi.DEFAULT_LANGUAGE, page++, TmdbApi.DEFAULT_REGION).subscribe({ movies ->
@@ -27,9 +23,5 @@ class MoviesDataSource(private val api: TmdbApi, private val compositeDisposable
         compositeDisposable.add(api.genres(TmdbApi.API_KEY, TmdbApi.DEFAULT_LANGUAGE).subscribe {
             Cache.cacheGenres(it.genres)
         })
-    }
-
-    override fun getKey(item: Movie): Long {
-        return page
     }
 }
