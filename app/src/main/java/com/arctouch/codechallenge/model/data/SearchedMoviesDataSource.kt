@@ -7,23 +7,24 @@ class SearchedMoviesDataSource(api: TmdbApi, compositeDisposable: CompositeDispo
 
     override fun loadInitial(params: LoadInitialParams<Long>, callback: LoadInitialCallback<Movie>) {
         compositeDisposable.add(api.searchMovies(TmdbApi.API_KEY, TmdbApi.DEFAULT_LANGUAGE, query, page++, TmdbApi.DEFAULT_REGION).subscribe({ movies ->
-            callback.onResult(movies.results)
+            val moviesWithGenres = movies.results.map { movie ->
+                movie.copy(genres = Cache.genres.filter { movie.genreIds?.contains(it.id) == true })
+            }
+            callback.onResult(moviesWithGenres)
         }, { throwable -> }
         ))
     }
 
     override fun loadAfter(params: LoadParams<Long>, callback: LoadCallback<Movie>) {
         compositeDisposable.add(api.searchMovies(TmdbApi.API_KEY, TmdbApi.DEFAULT_LANGUAGE, query, page++, TmdbApi.DEFAULT_REGION).subscribe({ movies ->
-            callback.onResult(movies.results)
+            val moviesWithGenres = movies.results.map { movie ->
+                movie.copy(genres = Cache.genres.filter { movie.genreIds?.contains(it.id) == true })
+            }
+            callback.onResult(moviesWithGenres)
         }, { throwable -> }
         ))
     }
 
     override fun loadBefore(params: LoadParams<Long>, callback: LoadCallback<Movie>) {
-        if (Cache.genres.isNullOrEmpty()) {
-            compositeDisposable.add(api.genres(TmdbApi.API_KEY, TmdbApi.DEFAULT_LANGUAGE).subscribe {
-                Cache.cacheGenres(it.genres)
-            })
-        }
     }
 }

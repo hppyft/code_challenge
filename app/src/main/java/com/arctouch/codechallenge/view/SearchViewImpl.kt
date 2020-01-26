@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.paging.PagedList
 import com.arctouch.codechallenge.R
@@ -14,7 +15,7 @@ import com.arctouch.codechallenge.view.adapter.MoviesPagedAdapter
 import kotlinx.android.synthetic.main.home_activity.recyclerView
 import kotlinx.android.synthetic.main.search_activity.*
 
-class SearchViewImpl : AppCompatActivity(), SearchView {
+class SearchViewImpl : AppCompatActivity(), SearchView{
     private val presenter: SearchPresenter
     private lateinit var adapter: MoviesPagedAdapter
 
@@ -27,6 +28,10 @@ class SearchViewImpl : AppCompatActivity(), SearchView {
         setContentView(R.layout.search_activity)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         initAdapter()
+        setupSearchBar()
+    }
+
+    private fun setupSearchBar() {
         search_view.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
                 presenter.onQueryChanged(s.toString())
@@ -44,7 +49,10 @@ class SearchViewImpl : AppCompatActivity(), SearchView {
     private fun initAdapter() {
         adapter = MoviesPagedAdapter()
         recyclerView.adapter = adapter
-        presenter.getList().observe(this, Observer<PagedList<Movie>> {
+    }
+
+    override fun setList(list: LiveData<PagedList<Movie>>){
+        list.observe(this, Observer<PagedList<Movie>> {
             adapter.submitList(it)
         })
     }

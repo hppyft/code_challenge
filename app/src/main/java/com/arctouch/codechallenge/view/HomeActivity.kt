@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.paging.PagedList
 import com.arctouch.codechallenge.R
@@ -41,14 +42,17 @@ class HomeActivity : AppCompatActivity(), HomeView, MovieClickedListener {
     private fun initAdapter() {
         adapter = MoviesPagedAdapter(this)
         recyclerView.adapter = adapter
-        presenter.getList().observe(this, Observer<PagedList<Movie>> {
-            adapter.submitList(it)
-        })
     }
 
     override fun onDestroy() {
         super.onDestroy()
         presenter.onDestroy()
+    }
+
+    override fun setList(list: LiveData<PagedList<Movie>>){
+        list.observe(this, Observer<PagedList<Movie>> {
+            adapter.submitList(it)
+        })
     }
 
 

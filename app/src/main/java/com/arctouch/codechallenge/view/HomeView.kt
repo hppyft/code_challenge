@@ -1,4 +1,4 @@
 package com.arctouch.codechallenge.view
 
-interface HomeView {
+interface HomeView : MovieListBaseView {
 }
