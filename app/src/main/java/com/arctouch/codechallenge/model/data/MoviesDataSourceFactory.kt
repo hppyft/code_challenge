@@ -17,8 +17,8 @@ class MoviesDataSourceFactory(private val compositeDisposable: CompositeDisposab
 
     override fun create(): DataSource<Long, Movie> {
         moviesDataSource = when (dataSourceType) {
-            SEARCHED_MOVIES -> SearchedMoviesDataSource(api, compositeDisposable, query)
-            else -> UpcomingMoviesDataSource(api, compositeDisposable)
+            SEARCHED_MOVIES -> MoviesDataSource(compositeDisposable) { page -> api.searchMovies(TmdbApi.API_KEY, TmdbApi.DEFAULT_LANGUAGE, query, page, TmdbApi.DEFAULT_REGION) }
+            else -> MoviesDataSource(compositeDisposable) { page -> api.upcomingMovies(TmdbApi.API_KEY, TmdbApi.DEFAULT_LANGUAGE, page, TmdbApi.DEFAULT_REGION) }
         }
         moviesDataSourceLiveData.postValue(moviesDataSource)
         return moviesDataSource!!
