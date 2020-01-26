@@ -17,17 +17,14 @@ import com.arctouch.codechallenge.view.adapter.MoviesPagedAdapter
 import kotlinx.android.synthetic.main.home_activity.*
 
 class HomeActivity : AppCompatActivity(), HomeView, MovieClickedListener {
-    private val presenter: HomePresenter
+    private lateinit var presenter: HomePresenter
     private lateinit var adapter: MoviesPagedAdapter
-
-    init {
-        presenter = HomePresenterImpl(this)
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.home_activity)
         initAdapter()
+        presenter = HomePresenterImpl(this)
         try_again_bt.setOnClickListener {
             presenter.tryAgain()
         }
@@ -55,14 +52,9 @@ class HomeActivity : AppCompatActivity(), HomeView, MovieClickedListener {
 
     override fun setList(list: LiveData<PagedList<Movie>>) {
         list.observe(this, Observer<PagedList<Movie>> {
-            progress_bar.visibility = View.GONE
-            if (it.isEmpty()) {
-                no_movies_group.visibility = View.VISIBLE
-                home_movies_list.visibility = View.GONE
-            } else {
-                no_movies_group.visibility = View.GONE
-                home_movies_list.visibility = View.VISIBLE
-            }
+            home_progress_bar.visibility = View.GONE
+            no_movies_group.visibility = View.GONE
+            home_movies_list.visibility = View.VISIBLE
             adapter.submitList(it)
         })
     }
@@ -73,5 +65,10 @@ class HomeActivity : AppCompatActivity(), HomeView, MovieClickedListener {
             putExtra(DetailsView.MOVIE_ID, movieId)
         }
         startActivity(intent)
+    }
+
+    override fun showNoConnection() {
+        home_progress_bar.visibility = View.GONE
+        no_movies_group.visibility = View.VISIBLE
     }
 }

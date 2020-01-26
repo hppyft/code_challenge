@@ -76,4 +76,9 @@ class SearchViewImpl : AppCompatActivity(), SearchView, MovieClickedListener {
         }
         startActivity(intent)
     }
+
+    override fun showNoConnection() {
+        no_movies_tv.visibility = View.VISIBLE
+        search_movies_list.visibility = View.GONE
+    }
 }
