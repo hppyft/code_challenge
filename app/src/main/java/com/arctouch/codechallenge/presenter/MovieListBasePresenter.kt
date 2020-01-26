@@ -4,7 +4,7 @@ import android.annotation.SuppressLint
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
 import com.arctouch.codechallenge.MoviesApplication
-import com.arctouch.codechallenge.model.api.MoviesModel
+import com.arctouch.codechallenge.model.api.TmdbApi
 import com.arctouch.codechallenge.model.data.Cache
 import com.arctouch.codechallenge.model.data.Movie
 import com.arctouch.codechallenge.model.data.MoviesDataSourceFactory
@@ -23,7 +23,7 @@ abstract class MovieListBasePresenter(val dataSourceType: Int, val view: MovieLi
 
     @SuppressLint("CheckResult")
     protected fun getMovies() {
-        MoviesApplication.getInstance().getApi().genres(MoviesModel.API_KEY, MoviesModel.DEFAULT_LANGUAGE)
+        MoviesApplication.getInstance().getApi().genres()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe {
