@@ -45,7 +45,6 @@ class DetailsViewImpl : AppCompatActivity(), DetailsView {
         movie_title.text = if (movie.title.isNullOrEmpty()) getString(R.string.no_title_found) else movie.title
 
         if (!movie.posterPath.isNullOrEmpty()) {
-            movie_poster.visibility = View.VISIBLE
             Glide.with(movie_poster)
                     .load(movie.posterPath.let { movieImageUrlBuilder.buildPosterUrl(it) })
                     .apply(RequestOptions().placeholder(R.drawable.ic_image_placeholder))
@@ -53,7 +52,6 @@ class DetailsViewImpl : AppCompatActivity(), DetailsView {
         }
 
         if (!movie.backdropPath.isNullOrEmpty()) {
-            movie_backdrop.visibility = View.VISIBLE
             Glide.with(movie_backdrop)
                     .load(movie.backdropPath.let { movieImageUrlBuilder.buildBackdropUrl(it) })
                     .apply(RequestOptions().placeholder(R.drawable.ic_image_placeholder))
@@ -65,5 +63,8 @@ class DetailsViewImpl : AppCompatActivity(), DetailsView {
         movie_genres.text = if (movie.genres.isNullOrEmpty()) getString(R.string.no_genres_found) else movie.genres.joinToString(separator = ", ") { it.name }
 
         movie_overview.text = if (movie.overview.isNullOrEmpty()) getString(R.string.no_overview_found) else movie.overview
+
+        details_progress.visibility = View.GONE
+        details_elements.visibility = View.VISIBLE
     }
 }
