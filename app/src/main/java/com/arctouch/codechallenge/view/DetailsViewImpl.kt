@@ -33,9 +33,10 @@ class DetailsViewImpl : AppCompatActivity(), DetailsView {
         when (item.itemId) {
             android.R.id.home -> {
                 super.onBackPressed()
+                return true
             }
         }
-        return true
+        return super.onOptionsItemSelected(item)
     }
 
     @SuppressLint("CheckResult")

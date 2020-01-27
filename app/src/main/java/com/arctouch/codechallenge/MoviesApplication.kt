@@ -8,8 +8,7 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.moshi.MoshiConverterFactory
 
 class MoviesApplication : Application() {
-
-    private var api: TmdbApi? = null
+    val api: TmdbApi by lazy { startApi() }
 
     companion object {
         private lateinit var INSTANCE: MoviesApplication
@@ -24,20 +23,12 @@ class MoviesApplication : Application() {
         INSTANCE = this
     }
 
-    fun getApi(): TmdbApi {
-        if (api == null) {
-            startApi()
-        }
-        return api!!
-    }
+    private fun startApi(): TmdbApi = Retrofit.Builder()
+            .baseUrl(TmdbApi.URL)
+            .client(OkHttpClient.Builder().build())
+            .addConverterFactory(MoshiConverterFactory.create())
+            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+            .build()
+            .create(TmdbApi::class.java)
 
-    private fun startApi() {
-        api = Retrofit.Builder()
-                .baseUrl(TmdbApi.URL)
-                .client(OkHttpClient.Builder().build())
-                .addConverterFactory(MoshiConverterFactory.create())
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .build()
-                .create(TmdbApi::class.java)
-    }
 }

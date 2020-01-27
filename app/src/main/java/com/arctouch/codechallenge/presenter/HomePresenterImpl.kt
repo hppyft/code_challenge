@@ -31,12 +31,12 @@ class HomePresenterImpl(val view: HomeView) : HomePresenter {
 
     @SuppressLint("CheckResult")
     private fun getMovies(query: String) {
-        MoviesApplication.getInstance().getApi().genres()
+        MoviesApplication.getInstance().api.genres()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe {
                     Cache.cacheGenres(it.genres)
-                    sourceFactory = MoviesDataSourceFactory(compositeDisposable, MoviesApplication.getInstance().getApi(), query)
+                    sourceFactory = MoviesDataSourceFactory(compositeDisposable, MoviesApplication.getInstance().api, query)
                     val config = PagedList.Config.Builder()
                             .setPageSize(20)
                             .setEnablePlaceholders(false)

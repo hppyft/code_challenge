@@ -64,20 +64,23 @@ class HomeActivity : AppCompatActivity(), HomeView, MovieClickedListener {
             if (it.isEmpty()) {
                 showNoMovies()
             } else {
-                home_progress_bar.visibility = View.GONE
-                no_movies_group.visibility = View.GONE
-                home_movies_list.visibility = View.VISIBLE
+                showMovies()
             }
             adapter.submitList(it)
         })
     }
-
 
     override fun onMovieClicked(movieId: Long) {
         val intent = Intent(this, DetailsViewImpl::class.java).apply {
             putExtra(DetailsView.MOVIE_ID, movieId)
         }
         startActivity(intent)
+    }
+
+    private fun showMovies() {
+        home_progress_bar.visibility = View.GONE
+        no_movies_group.visibility = View.GONE
+        home_movies_list.visibility = View.VISIBLE
     }
 
     override fun showNoMovies() {
