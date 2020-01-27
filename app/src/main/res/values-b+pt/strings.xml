@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="release_date_label">Data de Lançamento:</string>
+    <string name="genres_label">Gênero:</string>
+    <string name="overview_label">Resumo:</string>
+    <string name="no_title_found">Nenhum título encontrado</string>
+    <string name="no_release_date_found">Nenhuma data de lançamento encontrada</string>
+    <string name="no_genres_found">Nenhum gênero encontrado</string>
+    <string name="no_overview_found">Nenhuma resumo encontrado</string>
+    <string name="details_screen_label">Tela de Detalhes</string>
+    <string name="search_screen_label">Tela de Busca</string>
+    <string name="search_title">Buscar</string>
+    <string name="no_movies_found">Nenhum filme encontrado</string>
+    <string name="search_hint">Procure por filmes aqui</string>
+</resources>

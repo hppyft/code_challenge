@@ -1,6 +1,4 @@
-package com.arctouch.codechallenge.data
-
-import com.arctouch.codechallenge.model.Genre
+package com.arctouch.codechallenge.model.data
 
 object Cache {
 
